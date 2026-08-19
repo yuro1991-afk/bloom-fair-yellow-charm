@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Omni-Forge // Visual Blueprint Deck</title>
+    <style>
+        :root {
+            --bg-color: #0f1115;
+            --panel-bg: #161b22;
+            --border-color: #30363d;
+            --accent-glow: #00ff66;
+            --text-main: #c9d1d9;
+            --wire-color: #58a6ff;
+        }
+        body {
+            margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace; overflow: hidden; height: 100vh;
+        }
+        header {
+            background: var(--panel-bg); border-bottom: 2px solid var(--border-color);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+        }
+        h1 { margin: 0; font-size: 16px; color: #fff; letter-spacing: 2px; }
+        .status { color: var(--accent-glow); font-size: 12px; }
+        #workspace { position: relative; width: 100vw; height: calc(100vh - 45px); display: grid; grid-template-columns: 280px 1fr; }
+        
+        /* Library Sidebar */
+        #library {
+            background: var(--panel-bg); border-right: 2px solid var(--border-color);
+            padding: 15px; overflow-y: auto;
+        }
+        .lib-category { font-size: 12px; color: #8b949e; margin-bottom: 8px; text-transform: uppercase; font-weight: bold; }
+        .gadget-item {
+            background: #21262d; border: 1px solid var(--border-color); padding: 8px 12px;
+            margin-bottom: 8px; cursor: grab; border-radius: 4px; font-size: 13px; transition: 0.2s;
+        }
+        .gadget-item:hover { border-color: var(--wire-color); background: #30363d; }
+
+        /* Canvas Arena */
+        #canvas-container { position: relative; background: radial-gradient(circle, #1a202c 0%, #0f1115 100%); overflow: hidden; }
+        .node {
+            position: absolute; width: 220px; background: var(--panel-bg); border: 2px solid var(--border-color);
+            border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); cursor: move; user-select: none;
+        }
+        .node-header { background: #21262d; padding: 8px 10px; font-weight: bold; font-size: 12px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; }
+        .node-body { padding: 10px; font-size: 11px; }
+        .port { width: 10px; height: 10px; background: var(--wire-color); border-radius: 50%; display: inline-block; cursor: pointer; }
+        .port-row { display: flex; justify-content: space-between; margin-top: 5px; align-items: center; }
+
+        /* Action Toolbar */
+        #toolbar {
+            position: absolute; bottom: 20px; right: 20px; background: var(--panel-bg);
+            border: 2px solid var(--accent-glow); padding: 12px 20px; border-radius: 6px;
+            display: flex; gap: 15px; box-shadow: 0 0 15px rgba(0,255,102,0.2);
+        }
+        button { background: var(--accent-glow); color: #000; border: none; padding: 8px 16px; font-weight: bold; cursor: pointer; border-radius: 3px; font-family: inherit; }
+        button:hover { background: #00cc52; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>⚡ THE OMNI-FORGE // DESKTOP SCHEMATIC DECK</h1>
+    <span class="status">● LOCAL PIPELINE READY [WS: CONNECTED]</span>
+</header>
+
+<div id="workspace">
+    <!-- Component & Gadget Library -->
+    <div id="library">
+        <div class="lib-category">// Input Nodes</div>
+        <div class="gadget-item" draggable="true">📦 In_PromptBox</div>
+        <div class="gadget-item" draggable="true">📂 In_ViewportDrop</div>
+        
+        <div class="lib-category" style="margin-top: 15px;">// Agent Nodes</div>
+        <div class="gadget-item" draggable="true">🧠 Router_Agent</div>
+        <div class="gadget-item" draggable="true">👁️ VLM_Critic</div>
+        
+        <div class="lib-category" style="margin-top: 15px;">// Spatial Gadgets</div>
+        <div class="gadget-item" draggable="true">🔮 Matrix_Spawner</div>
+        <div class="gadget-item" draggable="true">🧬 Orb_Morpher</div>
+        <div class="gadget-item" draggable="true">🕳️ Interior_Hollower</div>
+
+        <div class="lib-category" style="margin-top: 15px;">// Execution Nodes</div>
+        <div class="gadget-item" draggable="true">⚙️ Blender_Operator</div>
+    </div>
+
+    <!-- Interactive Canvas Arena -->
+    <div id="canvas-container">
+        <!-- Pre-wired Node 1: Input -->
+        <div class="node" id="node-1" style="top: 50px; left: 60px;">
+            <div class="node-header"><span>📦 In_PromptBox</span><span>[1]</span></div>
+            <div class="node-body">
+                Target: 1999 Ford Excursion Front-End
+                <div class="port-row"><span>Output Stream</span><span class="port"></span></div>
+            </div>
+        </div>
+
+        <!-- Pre-wired Node 2: Router Agent -->
+        <div class="node" id="node-2" style="top: 50px; left: 330px;">
+            <div class="node-header"><span>🧠 Router_Agent</span><span>[2]</span></div>
+            <div class="node-body">
+                <div class="port-row"><span class="port"></span><span>Input Wire</span></div>
+                OODA Loop Active
+                <div class="port-row"><span>Spatial Data</span><span class="port"></span></div>
+            </div>
+        </div>
+
+        <!-- Pre-wired Node 3: Matrix Spawner -->
+        <div class="node" id="node-3" style="top: 250px; left: 330px;">
+            <div class="node-header"><span>🔮 Matrix_Spawner</span><span>[3]</span></div>
+            <div class="node-body">
+                Dynamic Orb Volume: Loaded
+                <div class="port-row"><span class="port"></span><span>Input Matrix</span></div>
+                <div class="port-row"><span>Orbs Deployed</span><span class="port"></span></div>
+            </div>
+        </div>
+
+        <!-- Pre-wired Node 4: Blender Execution -->
+        <div class="node" id="node-4" style="top: 150px; left: 600px;">
+            <div class="node-header"><span>⚙️ Blender_Operator</span><span>[4]</span></div>
+            <div class="node-body">
+                <div class="port-row"><span class="port"></span><span>Morph Delta</span></div>
+                BPY API Execution Ready
+            </div>
+        </div>
+
+        <div id="toolbar">
+            <button onclick="alert('Executing Forge Pipeline: Initializing local WebSocket bridge to Blender...');">⚡ COMPILE & EXECUTE FORGE</button>
+            <button style="background: #21262d; color: var(--text-main); border: 1px solid var(--border-color);" onclick="alert('Clearing temporary node states...');">🔄 RESET CANVAS</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Simple drag-and-drop movement for workspace nodes
+    const nodes = document.querySelectorAll('.node');
+    nodes.forEach(node => {
+        let isDragging = false, startX, startY;
+        node.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX - node.offsetLeft;
+            startY = e.clientY - node.offsetTop;
+            node.style.zIndex = 1000;
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            node.style.left = (e.clientX - startX) + 'px';
+            node.style.top = (e.clientY - startY) + 'px';
+        });
+        document.addEventListener('mouseup', () => { isDragging = false; node.style.zIndex = 1; });
+    });
+</script>
+
+</body>
+</html>

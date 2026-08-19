@@ -1,0 +1,110 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --color-bg: #09090b;
+  --color-surface: #111114;
+  --color-elevated: #18181c;
+  --color-fg: #ececef;
+  --color-muted: #8b8b94;
+  --color-subtle: #5c5c66;
+  --color-border: #26262c;
+  --color-line: #1c1c22;
+  --color-primary: #d4d6db;
+  --color-primary-fg: #0a0a0b;
+  --color-accent: #d4d6db;
+  --color-live: #6ee7b7;
+  --color-warn: #e2b66a;
+  --color-danger: #e07a6a;
+  --color-wire: #8b93a1;
+  --color-blueprint: #143250;
+  --color-blueprint-ink: #9eb8c9;
+  --color-snap: #8fd4b8;
+  --font-sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-border: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-border-hover: 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html,
+  body,
+  #app {
+    min-height: 100%;
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.canvas-blueprint-field {
+  background-color: var(--color-blueprint);
+}
+
+.canvas-blueprint-sheet {
+  background-color: var(--color-blueprint);
+  background-image:
+    linear-gradient(rgba(186, 214, 230, 0.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(186, 214, 230, 0.28) 1px, transparent 1px),
+    linear-gradient(rgba(186, 214, 230, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(186, 214, 230, 0.1) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+}
+
+.port-snap {
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-snap) 45%, transparent);
+  background: var(--color-snap) !important;
+  transform: scale(1.45);
+}
+
+.port-hot {
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-danger) 50%, transparent);
+  background: var(--color-danger) !important;
+  transform: scale(1.35);
+}
+
+@keyframes short-burst {
+  0% { opacity: 1; transform: scale(0.4); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+
+.short-burst {
+  animation: short-burst 480ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.cursor-wire { cursor: crosshair; }
+.cursor-cut { cursor: cell; }
